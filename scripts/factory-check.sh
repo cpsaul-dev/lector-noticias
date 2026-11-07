@@ -33,12 +33,14 @@ fi
 
 wait_for_gradle_slot() {
   local running tries=0
-  running=$(( $( { pgrep -f '[o]rg.gradle.appname=gradlew' 2>/dev/null || true; } | wc -l ) ))
+  running=$(pgrep -f '[o]rg.gradle.appname=gradlew' 2>/dev/null | wc -l | tr -d ' \n' || echo 0)
+  if ! [[ "$running" =~ ^[0-9]+$ ]]; then running=0; fi
   while (( running >= 3 && tries < 5 )); do
-    echo "  [Gizmail Factory Gate] Esperando hueco de Gradle ($running compilaciones activas)..."
+    echo "  [Lector de Noticias Factory Gate] Esperando hueco de Gradle ($running compilaciones activas)..."
     sleep 2
     tries=$((tries + 1))
-    running=$(( $( { pgrep -f '[o]rg.gradle.appname=gradlew' 2>/dev/null || true; } | wc -l ) ))
+    running=$(pgrep -f '[o]rg.gradle.appname=gradlew' 2>/dev/null | wc -l | tr -d ' \n' || echo 0)
+    if ! [[ "$running" =~ ^[0-9]+$ ]]; then running=0; fi
   done
 }
 
@@ -59,7 +61,7 @@ run_gate() {
   fi
 }
 
-echo "==> [Gizmail Factory Gate] Iniciando verificación (quick=$QUICK_MODE, compact=$COMPACT_MODE, module=${TARGET_MODULE:-all})..."
+echo "==> [Lector de Noticias Factory Gate] Iniciando verificación (quick=$QUICK_MODE, compact=$COMPACT_MODE, module=${TARGET_MODULE:-all})..."
 
 # 1. Escaneo de secretos y claves en cambios preparados (staged)
 if command -v git >/dev/null 2>&1 && git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
@@ -71,10 +73,14 @@ if command -v git >/dev/null 2>&1 && git rev-parse --is-inside-work-tree >/dev/n
   fi
 fi
 
-# 2. Verificación Gradle Android (Mi correo / Gizmail)
+# 2. Verificación Gradle Android (Lector de Noticias)
 if [[ -x "./gradlew" ]]; then
-  if [[ -z "${JAVA_HOME:-}" ]] && [[ -d "/Applications/Android Studio.app/Contents/jbr/Contents/Home" ]]; then
-    export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+  if [[ -z "${JAVA_HOME:-}" ]]; then
+    if [[ -d "/Users/scastellano/Library/Java/JavaVirtualMachines/jdk-21.0.13+9/Contents/Home" ]]; then
+      export JAVA_HOME="/Users/scastellano/Library/Java/JavaVirtualMachines/jdk-21.0.13+9/Contents/Home"
+    elif [[ -d "/Applications/Android Studio.app/Contents/jbr/Contents/Home" ]]; then
+      export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+    fi
   fi
   if [[ -z "${ANDROID_HOME:-}" ]] && [[ -d "${HOME}/Library/Android/sdk" ]]; then
     export ANDROID_HOME="${HOME}/Library/Android/sdk"
@@ -96,4 +102,4 @@ if [[ -x "./gradlew" ]]; then
   fi
 fi
 
-echo "==> [Gizmail Factory Gate] Todas las puertas de verificación superadas."
+echo "==> [Lector de Noticias Factory Gate] Todas las puertas de verificación superadas."

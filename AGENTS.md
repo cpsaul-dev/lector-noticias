@@ -8,7 +8,7 @@ Todo cambio fluye por `docs/factory/<etapa>/<slug>.md` (`research` -> `stories` 
 
 ## 2. Los 3 Pilares Arquitectónicos Innegociables
 1. **Local-First Absoluto:** Room DB (`feeds`, `articles`, `article_timelines`, `article_quick_action_cache`) es la única fuente de verdad (`Single Source of Truth`). Extracción determinista HTML-a-Markdown (`ReadabilityMarkdownExtractor`), Story Clustering visual TF-IDF + Cosine (`< 50 ms`), Briefing Diario Anti-Doomscrolling (5–7 artículos/día) y cruce local de `ClaimReview` operan 100 % offline.
-2. **Desacoplamiento Estricto del Motor de IA (Núcleo IA + Conector IA 1.5.0):** Toda la IA generativa va por `dev.cpsaul.conectoria:client:1.5.0` detrás del contrato `AIHubConnector` (`Summarize`, `RewriteHeadline`, `QuickAction`, `FetchCoverageMatrix`). Cero claves de nube en la app; fila «Nube» de solo lectura en `PRIVACIDAD` (`info().grants`); fallback determinista al primer párrafo (*lead*) si no hay IA disponible (*Zero-Crash Guarantee*).
+2. **Desacoplamiento Estricto del Motor de IA (Núcleo IA + Conector IA 1.6.0):** Toda la IA generativa va por `dev.cpsaul.conectoria:client:1.6.0` detrás del contrato `AIHubConnector` con Router Proxy de 3 tiers (`task-simple`, `task-complex`, `task-cloud`). Cero claves de nube en la app; fila «Nube» de solo lectura en `PRIVACIDAD` (`info().grants`); fallback determinista al primer párrafo (*lead*) si no hay IA disponible (*Zero-Crash Guarantee*).
 3. **Interfaz Adaptativa Material 3 Expressive:** Jetpack Compose con patrón *List-Detail*, interfaz limpia sin semáforos de sesgo invasivos (`5.B`), toggle comparativo de titulares (`4.B`), acciones rápidas estructuradas (`6.B`) y paridad 1:1 español/inglés (`values/strings.xml` y `values-en/strings.xml`).
 
 ## 3. Comandos Clave
