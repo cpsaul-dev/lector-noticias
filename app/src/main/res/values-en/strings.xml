@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="date_locale">en</string>
+    <string name="nav_feed">Articles</string>
+    <string name="nav_briefing">Daily briefing</string>
+    <string name="nav_clusters">Stories</string>
+    <string name="nav_settings">Settings</string>
+    <string name="briefing_title">Daily briefing (Anti-Doomscrolling)</string>
+    <string name="briefing_subtitle">5 to 7 essential reads selected on your device.</string>
+    <string name="headline_original">Original headline</string>
+    <string name="headline_rewritten">Factual headline (AI)</string>
+    <string name="headline_toggle">Compare factual headline</string>
+    <string name="summary_title">Executive summary</string>
+    <string name="summary_lead_fallback">Deterministic lead (AI unavailable)</string>
+    <string name="quick_action_explain">Explain concepts</string>
+    <string name="quick_action_facts">Extract key figures</string>
+    <string name="quick_action_translate">Translate</string>
+    <string name="coverage_matrix_title">Coverage and plurality matrix (Cloud)</string>
+    <string name="timeline_title">Event timeline</string>
+    <string name="ai_unavailable">AI is not available right now</string>
+    <string name="ai_open_settings">AI settings</string>
+    <string name="ai_origin_on_device">On device</string>
+    <string name="ai_origin_cloud">Cloud</string>
+    <string name="settings_section_ai">ARTIFICIAL INTELLIGENCE</string>
+    <string name="settings_ai_source">AI source</string>
+    <string name="settings_ai_source_nucleo">Núcleo IA</string>
+    <string name="settings_ai_source_on_device">On this phone</string>
+    <string name="settings_ai_source_disabled">Disabled</string>
+    <string name="settings_ai_cloud_row">Cloud</string>
+    <string name="settings_ai_cloud_allowed">Allowed in Núcleo IA</string>
+    <string name="settings_ai_cloud_disallowed">Not allowed</string>
+    <string name="settings_ai_cloud_configure">Configured in Núcleo IA</string>
+    <string name="settings_section_appearance">APPEARANCE</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_system">System</string>
+    <string name="settings_section_about">ABOUT</string>
+    <string name="settings_license_value">EUPL v1.2 / Commercial License</string>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Pulso</string>
+    <string name="date_locale">es</string>
+    <string name="nav_feed"> Artículos</string>
+    <string name="nav_briefing">Edición diaria</string>
+    <string name="nav_clusters">Sucesos</string>
+    <string name="nav_settings">Ajustes</string>
+    <string name="briefing_title">Edición diaria (Anti-Doomscrolling)</string>
+    <string name="briefing_subtitle">De 5 a 7 lecturas esenciales seleccionadas en tu dispositivo.</string>
+    <string name="headline_original">Titular original</string>
+    <string name="headline_rewritten">Titular fáctico (IA)</string>
+    <string name="headline_toggle">Comparar titular fáctico</string>
+    <string name="summary_title">Resumen ejecutivo</string>
+    <string name="summary_lead_fallback">Extracto determinista (sin IA disponible)</string>
+    <string name="quick_action_explain">Explicar conceptos</string>
+    <string name="quick_action_facts">Extraer cifras clave</string>
+    <string name="quick_action_translate">Traducir</string>
+    <string name="coverage_matrix_title">Matriz de cobertura y pluralidad (Nube)</string>
+    <string name="timeline_title">Cronología del suceso</string>
+    <string name="ai_unavailable">La IA no está disponible ahora</string>
+    <string name="ai_open_settings">Ajustes de IA</string>
+    <string name="ai_origin_on_device">En el móvil</string>
+    <string name="ai_origin_cloud">Nube</string>
+    <string name="settings_section_ai">INTELIGENCIA ARTIFICIAL</string>
+    <string name="settings_ai_source">Fuente de IA</string>
+    <string name="settings_ai_source_nucleo">Núcleo IA</string>
+    <string name="settings_ai_source_on_device">En este móvil</string>
+    <string name="settings_ai_source_disabled">Desactivada</string>
+    <string name="settings_ai_cloud_row">Nube</string>
+    <string name="settings_ai_cloud_allowed">Permitida en Núcleo IA</string>
+    <string name="settings_ai_cloud_disallowed">No permitida</string>
+    <string name="settings_ai_cloud_configure">Se configura en Núcleo IA</string>
+    <string name="settings_section_appearance">APARIENCIA</string>
+    <string name="settings_language">Idioma</string>
+    <string name="settings_language_system">Sistema</string>
+    <string name="settings_section_about">ACERCA DE</string>
+    <string name="settings_license_value">EUPL v1.2 / Licencia Comercial</string>
+</resources>

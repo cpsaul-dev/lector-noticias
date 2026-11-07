@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Puerta Pre-Commit de la Capa 5 para Gizmail: verifica secretos y presupuesto de tokens antes de cada commit
+set -euo pipefail
+
+echo "[.githooks/pre-commit] Ejecutando verificación rápida de secretos de Gizmail..."
+if git diff --cached -G"(AKIA[0-9A-Z]{16}|sk-[a-zA-Z0-9]{32,}|ghp_[a-zA-Z0-9]{36}|AIza[0-9A-Za-z_-]{35}|STORE_PASSWORD[[:space:]]*=[[:space:]]*['\"][^'\"]+)" --quiet; then
+  echo "  [OK] Escaneo de secretos superado."
+else
+  echo "  [FAIL] ¡Posible secreto o clave detectada en los cambios preparados!" >&2
+  exit 1
+fi

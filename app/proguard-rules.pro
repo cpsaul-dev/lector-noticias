@@ -1,0 +1,2 @@
+-keep class dev.cpsaul.noticias.data.local.** { *; }
+-keep class dev.cpsaul.conectoria.** { *; }
