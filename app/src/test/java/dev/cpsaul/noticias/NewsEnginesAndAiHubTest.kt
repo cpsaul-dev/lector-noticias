@@ -15,10 +15,11 @@ import dev.cpsaul.conectoria.Origin
 import dev.cpsaul.conectoria.Privacy
 import dev.cpsaul.noticias.ai.AIException
 import dev.cpsaul.noticias.ai.AIExecutionPreference
+import dev.cpsaul.noticias.ai.AIHubConnector
 import dev.cpsaul.noticias.ai.AIResult
 import dev.cpsaul.noticias.ai.AITaskType
+import dev.cpsaul.noticias.ai.DefaultAiHubConnector
 import dev.cpsaul.noticias.ai.ExecutionTarget
-import dev.cpsaul.noticias.ai.NucleoAIHubConnector
 import dev.cpsaul.noticias.data.local.ArticleEntity
 import dev.cpsaul.noticias.domain.engine.ClaimReviewEntry
 import dev.cpsaul.noticias.domain.engine.ClaimReviewMatcher
@@ -38,7 +39,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.File
 
-class FakeTestNucleoClient(
+class FakeTestAiHubClient(
     override val availability: StateFlow<NucleoAvailability> = MutableStateFlow(NucleoAvailability.Ready)
 ) : NucleoIaClient {
     override fun setRules(rules: AppRules) {}
@@ -57,6 +58,8 @@ class FakeTestNucleoClient(
     @Deprecated("Usa pairIntent()", ReplaceWith("pairIntent()"))
     override fun consentIntent(): android.content.Intent? = null
 }
+
+typealias FakeTestNucleoClient = FakeTestAiHubClient
 
 class NewsEnginesAndAiHubTest {
 
@@ -212,11 +215,11 @@ class NewsEnginesAndAiHubTest {
     }
 
     @Test
-    fun testNucleoHubDeterministicFallbackWhenOffline() = runBlocking {
-        val fakeClient = FakeTestNucleoClient(
+    fun testAiHubDeterministicFallbackWhenOffline() = runBlocking {
+        val fakeClient = FakeTestAiHubClient(
             availability = MutableStateFlow(NucleoAvailability.NotInstalled)
         )
-        val connector = NucleoAIHubConnector(
+        val connector: AIHubConnector = DefaultAiHubConnector(
             client = fakeClient,
             userAllowsCloud = { false }
         )
@@ -229,18 +232,18 @@ class NewsEnginesAndAiHubTest {
             preference = AIExecutionPreference.PREFER_LOCAL
         )
 
-        assertTrue(result is AIResult.Success)
-        val success = result as AIResult.Success
+        assertTrue(result is AIResult.Success<*>)
+        val success = result as AIResult.Success<String>
         assertEquals(ExecutionTarget.DETERMINISTIC_FALLBACK, success.executedOn)
         assertTrue(success.data.contains("Este es el primer párrafo"))
     }
 
     @Test
     fun testCloudPolicyBlockedEnforcement() = runBlocking {
-        val fakeClient = FakeTestNucleoClient(
+        val fakeClient = FakeTestAiHubClient(
             availability = MutableStateFlow(NucleoAvailability.Ready)
         )
-        val connector = NucleoAIHubConnector(
+        val connector: AIHubConnector = DefaultAiHubConnector(
             client = fakeClient,
             userAllowsCloud = { false }
         )

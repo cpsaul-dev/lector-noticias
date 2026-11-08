@@ -115,10 +115,10 @@ object NewsAiRules {
 }
 
 /**
- * Implementación del conector IPC respaldada por `dev.cpsaul.conectoria:client:1.5.0`
- * con degradación determinista (*Zero-Crash Guarantee*).
+ * Implementación del conector IPC respaldada por `dev.cpsaul.conectoria:client`
+ * con degradación determinista (*Zero-Crash Guarantee*) y alineada al estándar AiHub.
  */
-class NucleoAIHubConnector(
+class DefaultAiHubConnector(
     private val client: NucleoIaClient,
     private val userAllowsCloud: () -> Boolean = { true }
 ) : AIHubConnector {
@@ -262,14 +262,17 @@ class NucleoAIHubConnector(
     }
 
     companion object {
-        fun create(context: Context): NucleoAIHubConnector {
+        fun create(context: Context): AIHubConnector {
             val target = when {
                 BuildConfig.DEBUG -> NucleoTarget.DEBUG
                 BuildConfig.STAGE == "alpha" -> NucleoTarget.ALPHA
                 else -> NucleoTarget.RELEASE
             }
             val client = ConectorIa.client(context.applicationContext, target)
-            return NucleoAIHubConnector(client)
+            return DefaultAiHubConnector(client)
         }
     }
 }
+
+@Deprecated("Usa DefaultAiHubConnector", ReplaceWith("DefaultAiHubConnector"))
+typealias NucleoAIHubConnector = DefaultAiHubConnector

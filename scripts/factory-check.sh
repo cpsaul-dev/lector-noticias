@@ -87,18 +87,18 @@ if [[ -x "./gradlew" ]]; then
   fi
   wait_for_gradle_slot
   if [[ ${#CUSTOM_TASKS[@]} -gt 0 ]]; then
-    run_gate "Tareas Gradle (${CUSTOM_TASKS[*]})" ./gradlew "${CUSTOM_TASKS[@]}" --console=plain
+    run_gate "Tareas Gradle (${CUSTOM_TASKS[*]})" ./gradlew "${CUSTOM_TASKS[@]}" --no-daemon --console=plain
   elif [[ "$CALIDAD_MODE" == "true" ]]; then
-    run_gate "Puerta N1 completa (calidad)" ./gradlew calidad --console=plain
+    run_gate "Puerta N1 completa (calidad)" ./gradlew calidad --no-daemon --console=plain
   elif [[ -n "$TARGET_MODULE" ]]; then
-    run_gate "Tests unitarios (${TARGET_MODULE}:testDebugUnitTest)" ./gradlew "${TARGET_MODULE}:testDebugUnitTest" --console=plain
+    run_gate "Tests unitarios (${TARGET_MODULE}:testDebugUnitTest)" ./gradlew "${TARGET_MODULE}:testDebugUnitTest" --no-daemon --console=plain
   elif [[ "$QUICK_MODE" == "true" ]]; then
-    run_gate "Tests unitarios rápidos (testDebugUnitTest)" ./gradlew testDebugUnitTest --console=plain
+    run_gate "Tests unitarios rápidos (testDebugUnitTest)" ./gradlew testDebugUnitTest --no-daemon --console=plain
   elif [[ -d "build-logic" ]]; then
-    run_gate "Puerta N1 completa (calidad)" ./gradlew calidad --console=plain
+    run_gate "Puerta N1 completa (calidad)" ./gradlew calidad --no-daemon --console=plain
   else
-    run_gate "Android Lint (:app:lintDebug)" ./gradlew :app:lintDebug --console=plain
-    run_gate "Tests unitarios (testDebugUnitTest)" ./gradlew testDebugUnitTest --console=plain
+    run_gate "Android Lint (:app:lintDebug)" ./gradlew :app:lintDebug --no-daemon --console=plain
+    run_gate "Tests unitarios (testDebugUnitTest)" ./gradlew testDebugUnitTest --no-daemon --console=plain
   fi
 fi
 

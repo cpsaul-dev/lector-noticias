@@ -24,13 +24,13 @@
     <string name="ai_origin_cloud">Nube</string>
     <string name="settings_section_ai">INTELIGENCIA ARTIFICIAL</string>
     <string name="settings_ai_source">Fuente de IA</string>
-    <string name="settings_ai_source_nucleo">Núcleo IA</string>
+    <string name="settings_ai_source_nucleo">AiHub</string>
     <string name="settings_ai_source_on_device">En este móvil</string>
     <string name="settings_ai_source_disabled">Desactivada</string>
     <string name="settings_ai_cloud_row">Nube</string>
-    <string name="settings_ai_cloud_allowed">Permitida en Núcleo IA</string>
+    <string name="settings_ai_cloud_allowed">Permitida en AiHub</string>
     <string name="settings_ai_cloud_disallowed">No permitida</string>
-    <string name="settings_ai_cloud_configure">Se configura en Núcleo IA</string>
+    <string name="settings_ai_cloud_configure">Se configura en AiHub</string>
     <string name="settings_section_appearance">APARIENCIA</string>
     <string name="settings_language">Idioma</string>
     <string name="settings_language_system">Sistema</string>

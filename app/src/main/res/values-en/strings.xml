@@ -23,13 +23,13 @@
     <string name="ai_origin_cloud">Cloud</string>
     <string name="settings_section_ai">ARTIFICIAL INTELLIGENCE</string>
     <string name="settings_ai_source">AI source</string>
-    <string name="settings_ai_source_nucleo">Núcleo IA</string>
+    <string name="settings_ai_source_nucleo">AiHub</string>
     <string name="settings_ai_source_on_device">On this phone</string>
     <string name="settings_ai_source_disabled">Disabled</string>
     <string name="settings_ai_cloud_row">Cloud</string>
-    <string name="settings_ai_cloud_allowed">Allowed in Núcleo IA</string>
+    <string name="settings_ai_cloud_allowed">Allowed in AiHub</string>
     <string name="settings_ai_cloud_disallowed">Not allowed</string>
-    <string name="settings_ai_cloud_configure">Configured in Núcleo IA</string>
+    <string name="settings_ai_cloud_configure">Configured in AiHub</string>
     <string name="settings_section_appearance">APPEARANCE</string>
     <string name="settings_language">Language</string>
     <string name="settings_language_system">System</string>

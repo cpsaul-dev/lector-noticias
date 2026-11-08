@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun NewsReaderApp(
     articles: List<ArticleEntity> = sampleArticles(),
-    cloudAllowedInNucleo: Boolean = false
+    cloudAllowedInAiHub: Boolean = false
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
     var selectedArticle by remember { mutableStateOf<ArticleEntity?>(null) }
@@ -95,7 +95,7 @@ fun NewsReaderApp(
         if (current != null) {
             ArticleDetailView(
                 article = current,
-                cloudAllowedInNucleo = cloudAllowedInNucleo,
+                cloudAllowedInAiHub = cloudAllowedInAiHub,
                 modifier = Modifier.padding(padding)
             )
         } else {
@@ -111,7 +111,7 @@ fun NewsReaderApp(
                     modifier = Modifier.padding(padding)
                 )
                 else -> AiSettingsSectionView(
-                    cloudAllowedInNucleo = cloudAllowedInNucleo,
+                    cloudAllowedInAiHub = cloudAllowedInAiHub,
                     modifier = Modifier.padding(padding)
                 )
             }
@@ -178,7 +178,7 @@ fun StoryClustersView(
 @Composable
 fun ArticleDetailView(
     article: ArticleEntity,
-    cloudAllowedInNucleo: Boolean,
+    cloudAllowedInAiHub: Boolean,
     modifier: Modifier = Modifier
 ) {
     var showFactualHeadline by remember { mutableStateOf(false) }
@@ -232,7 +232,7 @@ fun ArticleDetailView(
                 }
             }
         }
-        if (cloudAllowedInNucleo) {
+        if (cloudAllowedInAiHub) {
             item {
                 Card(modifier = Modifier.fillMaxWidth()) {
                     Column(modifier = Modifier.padding(16.dp)) {
@@ -249,7 +249,7 @@ fun ArticleDetailView(
 
 @Composable
 fun AiSettingsSectionView(
-    cloudAllowedInNucleo: Boolean,
+    cloudAllowedInAiHub: Boolean,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -260,7 +260,7 @@ fun AiSettingsSectionView(
                 Text(text = stringResource(R.string.settings_ai_source_nucleo), style = MaterialTheme.typography.bodyMedium)
                 Text(
                     text = stringResource(R.string.settings_ai_cloud_row) + ": " +
-                        if (cloudAllowedInNucleo) stringResource(R.string.settings_ai_cloud_allowed)
+                        if (cloudAllowedInAiHub) stringResource(R.string.settings_ai_cloud_allowed)
                         else stringResource(R.string.settings_ai_cloud_disallowed),
                     style = MaterialTheme.typography.bodySmall
                 )
