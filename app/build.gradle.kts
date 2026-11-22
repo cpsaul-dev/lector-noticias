@@ -83,4 +83,6 @@ dependencies {
   testImplementation(libs.junit)
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.turbine)
+  testImplementation(libs.okhttp.mockwebserver)
+  testImplementation("org.json:json:20240303")
 }

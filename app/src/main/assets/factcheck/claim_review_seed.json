@@ -1,0 +1,65 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ClaimReview",
+      "url": "https://fullfact.org/health/hot-water-virus-claim/",
+      "claimReviewed": "El consumo de agua caliente o infusiones a 60 grados cura o elimina infecciones respiratorias virales",
+      "datePublished": "2025-11-10",
+      "author": {
+        "@type": "Organization",
+        "name": "Full Fact"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "alternateName": "Falso",
+        "ratingValue": 1
+      }
+    },
+    {
+      "@type": "ClaimReview",
+      "url": "https://datacommons.org/factcheck/renewable-grid-blackout-myth",
+      "claimReviewed": "Las redes eléctricas europeas sufren apagones automáticos al superar el 50 por ciento de generación renovable",
+      "datePublished": "2026-02-14",
+      "author": {
+        "@type": "Organization",
+        "name": "ClaimReview / Data Commons"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "alternateName": "Engañoso",
+        "ratingValue": 2
+      }
+    },
+    {
+      "@type": "ClaimReview",
+      "url": "https://fullfact.org/online/ai-watermark-law-eu/",
+      "claimReviewed": "El Reglamento de Inteligencia Artificial de la Unión Europea prohíbe el uso de modelos de código abierto en dispositivos locales",
+      "datePublished": "2026-05-03",
+      "author": {
+        "@type": "Organization",
+        "name": "Full Fact"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "alternateName": "Falso",
+        "ratingValue": 1
+      }
+    },
+    {
+      "@type": "ClaimReview",
+      "url": "https://datacommons.org/factcheck/5g-weather-satellites-interference",
+      "claimReviewed": "Las antenas 5G alteran directamente el clima y provocan tormentas tropicales en zonas costeras",
+      "datePublished": "2026-01-19",
+      "author": {
+        "@type": "Organization",
+        "name": "ClaimReview / Data Commons"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "alternateName": "Falso",
+        "ratingValue": 1
+      }
+    }
+  ]
+}

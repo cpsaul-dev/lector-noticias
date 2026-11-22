@@ -18,3 +18,14 @@ Cada tarea declarada por el Lector de Noticias a **Núcleo IA** mediante `setRul
 | `accion_rapida_datos` (`QuickAction: EXTRACTION_FACTS`) | `LOCAL` | `LOCAL_ONLY` | `25_000` | Extracción determinista local de cifras y porcentajes del texto Markdown. |
 | `accion_rapida_traducir` (`QuickAction: TRANSLATE`) | `LOCAL` | `LOCAL_ONLY` | `25_000` | Glosario/diccionario local determinista offline. |
 | `matriz_cobertura` (`FetchCoverageMatrix`) | `COMPLEX` | `ALLOW_CLOUD` | `60_000` | Ocultación total: el componente `CoverageMatrixCard` no se renderiza si `CloudPolicyBlocked` o sin nube autorizada en Núcleo IA. |
+
+---
+
+### Proveedor Alternativo Open Source: Sign in with ChatGPT (OAuth 2.0 + PKCE)
+- Además de **AiHub (Núcleo IA)**, la aplicación admite autenticación oficial **Sign in with ChatGPT** para proyectos de código abierto (`ChatGptOAuthManager` + `ChatGptResponsesConnector`), utilizando `client_id=dynamic_agent_client` en el primer registro, PKCE S256, loopback local en `127.0.0.1` y almacenamiento cifrado en Android Keystore.
+- Las inferencias se ejecutan sobre `https://api.openai.com/v1/responses` con `store: false` y `stream: true`, redactando PII (`PayloadRedactor`) y soportando cancelación inmediata mediante el botón **Detener / Stop** (§7).
+
+### Catálogo de Plantillas de Prompts (Issue #1)
+- Plantillas vacías con placeholders: `app/src/main/assets/ai-templates/templates_empty.json`
+- Plantillas rellenas de ejemplo para benchmark de tokens en AiHub: `app/src/main/assets/ai-templates/templates_examples.json`
+

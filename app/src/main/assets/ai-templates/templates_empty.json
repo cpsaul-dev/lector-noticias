@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "app": "dev.cpsaul.noticias",
+  "tier_mapping": {
+    "task-simple": [
+      "reescribir_titular",
+      "accion_rapida_explicar",
+      "accion_rapida_datos",
+      "accion_rapida_traducir"
+    ],
+    "task-complex": [
+      "resumen_ejecutivo",
+      "analisis_controversia_cluster"
+    ],
+    "task-cloud": [
+      "matriz_cobertura"
+    ]
+  },
+  "templates": {
+    "resumen_ejecutivo": {
+      "tier": "task-complex",
+      "system": "Resume de forma objetiva y concisa en 3 puntos clave el siguiente artículo periodístico sin inventar datos ni emitir juicios de valor.",
+      "user": "Medio: ${outlet_name}\nTitular: ${article_headline}\n<article>\n${article_markdown}\n</article>"
+    },
+    "reescribir_titular": {
+      "tier": "task-simple",
+      "system": "Reescribe el titular de forma estrictamente fáctica, neutral y sin sensacionalismo basándote únicamente en el texto del artículo.",
+      "user": "Titular original: ${article_headline}\nContexto:\n${article_markdown}"
+    },
+    "accion_rapida_explicar": {
+      "tier": "task-simple",
+      "system": "Explica de forma breve, clara y neutral los conceptos técnicos mencionados en el fragmento.",
+      "user": "Consulta: ${user_query}\nFragmento:\n${article_markdown}"
+    },
+    "accion_rapida_datos": {
+      "tier": "task-simple",
+      "system": "Extrae únicamente las cifras, fechas, porcentajes y hechos verificables del fragmento en una lista estructurada.",
+      "user": "${article_markdown}"
+    },
+    "accion_rapida_traducir": {
+      "tier": "task-simple",
+      "system": "Traduce el fragmento al idioma del usuario manteniendo la precisión y el tono periodístico original.",
+      "user": "${article_markdown}"
+    },
+    "matriz_cobertura": {
+      "tier": "task-cloud",
+      "system": "Analiza la pluralidad de encuadres entre las siguientes fuentes sobre el mismo suceso sin emitir sesgos partidistas. Devuelve JSON con ejes temáticos y diferencias de enfoque.",
+      "user": "Suceso: ${article_headline}\nFuentes:\n${article_markdown}"
+    }
+  }
+}

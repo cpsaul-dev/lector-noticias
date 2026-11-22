@@ -196,22 +196,56 @@ object DailyBriefingSelector {
 }
 
 /**
- * §3 Verificación local de afirmaciones contra catálogo offline Schema.org `ClaimReview`.
+ * §3 Verificación local de afirmaciones contra catálogo offline Schema.org `ClaimReview`
+ * (Data Commons / ClaimReview Project / Full Fact).
  */
 data class ClaimReviewEntry(
     val id: String,
     val claimText: String,
     val ratingLabel: String,
     val publisherName: String,
-    val reviewUrl: String
+    val reviewUrl: String,
+    val sourceProvider: String = "ClaimReview",
+    val publishedDate: String? = null
 )
 
 object ClaimReviewMatcher {
+    private val stopWords = setOf(
+        "el", "la", "los", "las", "un", "una", "unos", "unas", "de", "del", "en", "y", "o", "a",
+        "por", "para", "con", "sin", "sobre", "entre", "desde", "hasta", "se", "su", "sus", "al",
+        "es", "son", "fue", "han", "que", "como", "mas", "pero", "este", "esta", "estos", "estas",
+        "the", "of", "in", "and", "or", "to", "for", "on", "with", "at", "by", "from", "is", "are", "that", "this"
+    )
+
     fun findMatchingClaims(articleText: String, catalog: List<ClaimReviewEntry>): List<ClaimReviewEntry> {
-        val normalizedArticle = articleText.lowercase()
-        return catalog.filter { entry ->
-            val keywords = entry.claimText.lowercase().split(Regex("""\s+""")).filter { it.length >= 5 }
-            keywords.isNotEmpty() && keywords.count { normalizedArticle.contains(it) } >= (keywords.size * 0.6).toInt().coerceAtLeast(1)
-        }
+        if (articleText.isBlank() || catalog.isEmpty()) return emptyList()
+        val articleTokens = normalizeTokens(articleText)
+        if (articleTokens.isEmpty()) return emptyList()
+
+        return catalog
+            .mapNotNull { entry ->
+                val score = computeMatchScore(articleTokens, entry.claimText)
+                if (score >= 0.45) entry to score else null
+            }
+            .sortedByDescending { it.second }
+            .map { it.first }
+    }
+
+    internal fun computeMatchScore(articleTokens: Set<String>, claimText: String): Double {
+        val claimTokens = normalizeTokens(claimText)
+        if (claimTokens.isEmpty()) return 0.0
+        val overlap = claimTokens.count { it in articleTokens }
+        return overlap.toDouble() / claimTokens.size.toDouble()
+    }
+
+    internal fun normalizeTokens(text: String): Set<String> {
+        val normalized = java.text.Normalizer.normalize(text.lowercase(), java.text.Normalizer.Form.NFD)
+            .replace(Regex("""\p{InCombiningDiacriticalMarks}+"""), "")
+        return Regex("""[a-z0-9]{4,}""")
+            .findAll(normalized)
+            .map { it.value }
+            .filter { it !in stopWords }
+            .toSet()
     }
 }
+

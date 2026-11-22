@@ -58,11 +58,12 @@ enum class AIExecutionPreference {
 enum class ExecutionTarget {
     LOCAL_ONNX_GEMMA,
     CLOUD_GATEWAY,
+    CHATGPT_OAUTH,
     DETERMINISTIC_FALLBACK
 }
 
 sealed class AIException(message: String) : Exception(message) {
-    object CloudPolicyBlocked : AIException("Cloud execution blocked by user or Núcleo IA policy") {
+    object CloudPolicyBlocked : AIException("Cloud execution blocked by user or AiHub policy") {
         private fun readResolve(): Any = CloudPolicyBlocked
     }
 
@@ -92,7 +93,7 @@ interface AIHubConnector {
 }
 
 /**
- * Reglas oficiales del Lector de Noticias para Núcleo IA (`docs/IA-TAREAS.md`).
+ * Reglas oficiales del Lector de Noticias para AiHub (`docs/IA-TAREAS.md`).
  */
 object NewsAiRules {
     const val TASK_SUMMARIZE = "resumen_ejecutivo"
@@ -154,13 +155,17 @@ class DefaultAiHubConnector(
 
         val request = buildRequest(task, effectivePref)
         return try {
-            val result = client.complete(request)
+            val result = kotlinx.coroutines.withTimeoutOrNull(45_000L) {
+                client.complete(request)
+            } ?: return fallbackOrError(task, effectivePref)
             val target = when (result.origin) {
                 Origin.CLOUD -> ExecutionTarget.CLOUD_GATEWAY
                 else -> ExecutionTarget.LOCAL_ONNX_GEMMA
             }
             AIResult.Success(result.text.trim(), target)
-        } catch (e: NucleoIaException) {
+        } catch (ce: kotlinx.coroutines.CancellationException) {
+            throw ce
+        } catch (_: NucleoIaException) {
             fallbackOrError(task, effectivePref)
         } catch (_: Exception) {
             fallbackOrError(task, effectivePref)
