@@ -16,4 +16,7 @@ build/
 local.properties
 .env
 debug.keystore
+*.jks
+*.keystore
+keystore.properties
 /mappings

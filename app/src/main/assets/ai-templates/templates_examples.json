@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "app": "dev.cpsaul.noticias",
+  "purpose": "Benchmarking de tokens de hardware para enrutamiento de 3 tiers en AiHub",
+  "examples": {
+    "resumen_ejecutivo": {
+      "tier": "task-complex",
+      "outlet_name": "Agencia Europea de Noticias",
+      "article_headline": "La red eléctrica europea alcanza un 62 % de generación renovable en el tercer trimestre",
+      "prompt_filled": "Medio: Agencia Europea de Noticias\nTitular: La red eléctrica europea alcanza un 62 % de generación renovable en el tercer trimestre\n<article>\nLa red eléctrica europea registró un 62 % de generación renovable durante el tercer trimestre según los datos consolidados de los operadores de transporte energético.\n\nEl incremento estuvo liderado por la generación fotovoltaica y eólica, que aportaron 140 millones de MWh combinados. Las interconexiones transfronterizas entre España, Francia y Alemania redujeron los vertidos en un 18 % respecto al año anterior.\n\nLos reguladores señalan que el despliegue de baterías a escala de red alcanzó los 22 GWh instalados, aunque subrayan que será necesario reforzar las redes de distribución antes de 2030.\n</article>"
+    },
+    "reescribir_titular": {
+      "tier": "task-simple",
+      "outlet_name": "Diario Digital Ejemplo",
+      "article_headline": "¡Histórico bombazo energético! Europa arrasa con las renovables y deja atrás al gas",
+      "prompt_filled": "Titular original: ¡Histórico bombazo energético! Europa arrasa con las renovables y deja atrás al gas\nContexto:\nLa red eléctrica europea registró un 62 % de generación renovable durante el tercer trimestre según los datos consolidados de los operadores de transporte energético, frente al 56 % del mismo periodo del año anterior."
+    },
+    "accion_rapida_explicar": {
+      "tier": "task-simple",
+      "user_query": "Explicar conceptos técnicos",
+      "prompt_filled": "Consulta: Explicar conceptos técnicos\nFragmento:\nLas interconexiones transfronterizas redujeron los vertidos renovables en un 18 % y el almacenamiento en baterías a escala de red alcanzó 22 GWh."
+    },
+    "accion_rapida_datos": {
+      "tier": "task-simple",
+      "prompt_filled": "La generación renovable alcanzó el 62 % en el tercer trimestre con 140 millones de MWh, una reducción de vertidos del 18 % y 22 GWh en baterías antes de 2030."
+    },
+    "accion_rapida_traducir": {
+      "tier": "task-simple",
+      "prompt_filled": "European power grids reached 62% renewable generation in the third quarter, led by solar and wind output totaling 140 million MWh."
+    },
+    "matriz_cobertura": {
+      "tier": "task-cloud",
+      "prompt_filled": "Suceso: Generación eléctrica renovable europea Q3\nFuentes:\nAgencia Europea: La red eléctrica europea alcanza un 62 % de generación renovable en el tercer trimestre.\nEconomía Hoy: El auge solar presiona los precios mayoristas y exige inversión en redes de distribución.\nEnergía Verde: Las interconexiones recortan un 18 % los vertidos renovables en la UE."
+    }
+  }
+}

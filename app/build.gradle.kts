@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.kotlin.compose)
@@ -26,11 +28,34 @@ android {
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
+  val keystorePropsFile = rootProject.file("keystore.properties")
+  val releaseStoreFile = System.getenv("RELEASE_STORE_FILE")
+    ?: if (keystorePropsFile.exists()) {
+      Properties().apply { keystorePropsFile.inputStream().use { load(it) } }.getProperty("storeFile")
+    } else null
+
+  signingConfigs {
+    if (!releaseStoreFile.isNullOrBlank()) {
+      val props = Properties().apply {
+        if (keystorePropsFile.exists()) keystorePropsFile.inputStream().use { load(it) }
+      }
+      create("release") {
+        storeFile = file(releaseStoreFile)
+        storePassword = System.getenv("RELEASE_STORE_PASSWORD") ?: props.getProperty("storePassword")
+        keyAlias = System.getenv("RELEASE_KEY_ALIAS") ?: props.getProperty("keyAlias")
+        keyPassword = System.getenv("RELEASE_KEY_PASSWORD") ?: props.getProperty("keyPassword")
+      }
+    }
+  }
+
   buildTypes {
     release {
       isMinifyEnabled = true
       isShrinkResources = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+      if (!releaseStoreFile.isNullOrBlank()) {
+        signingConfig = signingConfigs.getByName("release")
+      }
     }
   }
 
@@ -54,6 +79,7 @@ android {
 dependencies {
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.appcompat)
+  implementation(libs.androidx.browser)
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.lifecycle.runtime.ktx)
   implementation(libs.androidx.lifecycle.runtime.compose)
@@ -83,4 +109,6 @@ dependencies {
   testImplementation(libs.junit)
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.turbine)
+  testImplementation(libs.okhttp.mockwebserver)
+  testImplementation("org.json:json:20240303")
 }

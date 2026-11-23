@@ -2,38 +2,152 @@
 <resources>
     <string name="app_name" translatable="false">Pulso</string>
     <string name="date_locale">es</string>
-    <string name="nav_feed"> Artículos</string>
-    <string name="nav_briefing">Edición diaria</string>
+    <string name="fecha_cabecera">EEEE d \'de\' MMMM</string>
+
+    <!-- Navegación principal -->
+    <string name="nav_briefing">Edición</string>
+    <string name="nav_feed">Artículos</string>
     <string name="nav_clusters">Sucesos</string>
+    <string name="nav_saved">Guardados</string>
     <string name="nav_settings">Ajustes</string>
-    <string name="briefing_title">Edición diaria (Anti-Doomscrolling)</string>
+    <string name="nav_profile">Perfil</string>
+    <string name="action_back">Volver</string>
+
+    <!-- Edición diaria -->
+    <string name="briefing_title">Edición diaria</string>
     <string name="briefing_subtitle">De 5 a 7 lecturas esenciales seleccionadas en tu dispositivo.</string>
+    <string name="briefing_empty">Sin artículos aún. Sincroniza tus fuentes o añade un feed.</string>
+    <string name="action_sync_now">Sincronizar</string>
+    <string name="sync_in_progress">Sincronizando fuentes…</string>
+    <string name="sync_done">Sincronización completada</string>
+
+    <!-- Feed y búsqueda -->
+    <string name="feed_search_hint">Buscar en artículos offline…</string>
+    <string name="feed_all_categories">Todas</string>
+    <string name="feed_add_title">Añadir fuente RSS / Atom / JSON</string>
+    <string name="feed_name_label">Nombre de la fuente</string>
+    <string name="feed_url_label">URL del feed</string>
+    <string name="feed_category_label">Carpeta / Categoría</string>
+    <string name="feed_manage_title">Fuentes y OPML</string>
+    <string name="feed_import_opml">Importar OPML</string>
+    <string name="feed_export_opml">Exportar OPML</string>
+    <string name="feed_delete">Eliminar</string>
+    <string name="action_add">Añadir</string>
+    <string name="action_save">Guardar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_close">Cerrar</string>
+
+    <!-- Sucesos y cronología -->
+    <string name="clusters_subtitle">Agrupación visual local sin síntesis cruzada.</string>
+    <string name="timeline_title">Cronología del suceso</string>
+
+    <!-- Lector de artículos y acciones rápidas -->
     <string name="headline_original">Titular original</string>
     <string name="headline_rewritten">Titular fáctico (IA)</string>
     <string name="headline_toggle">Comparar titular fáctico</string>
+    <string name="headline_generate">Reescribir titular</string>
     <string name="summary_title">Resumen ejecutivo</string>
-    <string name="summary_lead_fallback">Extracto determinista (sin IA disponible)</string>
+    <string name="summary_generate">Resumir</string>
+    <string name="summary_lead_fallback">Extracto determinista</string>
     <string name="quick_action_explain">Explicar conceptos</string>
     <string name="quick_action_facts">Extraer cifras clave</string>
     <string name="quick_action_translate">Traducir</string>
+    <string name="action_stop_ai">Detener</string>
+    <string name="ai_operation_cancelled">Operación cancelada</string>
+    <string name="ai_generating">Procesando con IA…</string>
     <string name="coverage_matrix_title">Matriz de cobertura y pluralidad (Nube)</string>
-    <string name="timeline_title">Cronología del suceso</string>
+    <string name="coverage_matrix_analyze">Analizar cobertura</string>
+    <string name="article_bookmark">Guardar</string>
+    <string name="article_bookmarked">Guardado</string>
+    <string name="article_open_original">Abrir original</string>
+    <string name="article_verify">Verificar</string>
+
+    <!-- Verificación de noticias (ClaimReview / Full Fact / Google Fact Check) -->
+    <string name="factcheck_section_title">Verificaciones relacionadas</string>
+    <string name="factcheck_empty">No se encontraron verificaciones coincidentes en el catálogo activo.</string>
+    <string name="factcheck_checking">Comprobando afirmaciones…</string>
+    <string name="factcheck_open_source">Ver verificación</string>
+    <string name="settings_section_factcheck">VERIFICACIÓN DE NOTICIAS</string>
+    <string name="settings_fc_offline">Catálogo ClaimReview offline</string>
+    <string name="settings_fc_offline_sub">Data Commons / Schema.org en tu móvil</string>
+    <string name="settings_fc_fullfact">Full Fact API</string>
+    <string name="settings_fc_fullfact_sub">Detección y cruce NLP de afirmaciones</string>
+    <string name="settings_fc_google">Google Fact Check Tools API</string>
+    <string name="settings_fc_google_sub">Consulta remota de veredictos ClaimReview</string>
+    <string name="settings_fc_config_dialog">Configurar APIs de verificación</string>
+    <string name="settings_fc_fullfact_endpoint">Endpoint Full Fact</string>
+    <string name="settings_fc_fullfact_token">Token Full Fact (opcional)</string>
+    <string name="settings_fc_google_key">Clave Google Fact Check (opcional)</string>
+    <string name="settings_fc_dump_url">URL dump JSON-LD ClaimReview</string>
+
+    <!-- IA y ChatGPT OAuth -->
     <string name="ai_unavailable">La IA no está disponible ahora</string>
     <string name="ai_open_settings">Ajustes de IA</string>
     <string name="ai_origin_on_device">En el móvil</string>
     <string name="ai_origin_cloud">Nube</string>
+    <string name="ai_origin_chatgpt">ChatGPT (OAuth)</string>
+    <string name="settings_section_account">CUENTA Y CONEXIONES</string>
+    <string name="settings_chatgpt_title">Continuar con ChatGPT</string>
+    <string name="settings_chatgpt_connected">Conectado</string>
+    <string name="settings_chatgpt_disconnected">Sin conectar</string>
+    <string name="settings_chatgpt_sub">OAuth open source con tu plan de ChatGPT</string>
+    <string name="settings_chatgpt_sign_out">Desconectar</string>
     <string name="settings_section_ai">INTELIGENCIA ARTIFICIAL</string>
     <string name="settings_ai_source">Fuente de IA</string>
     <string name="settings_ai_source_nucleo">AiHub</string>
+    <string name="settings_ai_source_chatgpt">ChatGPT OAuth</string>
     <string name="settings_ai_source_on_device">En este móvil</string>
     <string name="settings_ai_source_disabled">Desactivada</string>
     <string name="settings_ai_cloud_row">Nube</string>
     <string name="settings_ai_cloud_allowed">Permitida en AiHub</string>
     <string name="settings_ai_cloud_disallowed">No permitida</string>
     <string name="settings_ai_cloud_configure">Se configura en AiHub</string>
+
+    <!-- Apariencia, Privacidad, Datos y Perfil -->
     <string name="settings_section_appearance">APARIENCIA</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_system">Sistema</string>
+    <string name="settings_theme_light">Claro</string>
+    <string name="settings_theme_dark">Oscuro</string>
     <string name="settings_language">Idioma</string>
     <string name="settings_language_system">Sistema</string>
+    <string name="settings_section_privacy">PRIVACIDAD</string>
+    <string name="settings_error_reports">Guardar informes de errores</string>
+    <string name="settings_error_reports_sub">Solo fallos técnicos, sin tus datos</string>
+    <string name="settings_section_data">DATOS</string>
+    <string name="settings_saved_reports">Informes guardados</string>
+    <string name="settings_clear_action">Vaciar</string>
+    <string name="settings_cache_title">Caché offline</string>
+    <string name="settings_cache_sub">Imágenes y acciones rápidas</string>
+    <string name="profile_default_title">Tu perfil</string>
+    <string name="profile_name_row">Nombre</string>
+    <string name="profile_name_optional">Opcional</string>
+    <string name="profile_name_prompt">Cómo quieres que te llame</string>
+    <string name="profile_photo_dialog_title">Foto de perfil</string>
+    <string name="profile_photo_dialog_body">Se guarda cifrada, solo en este móvil.</string>
+    <string name="profile_photo_change">Cambiar</string>
+    <string name="profile_photo_remove">Quitar</string>
+    <string name="profile_photo_error">No se pudo usar esa foto</string>
+
+    <!-- Acerca de -->
     <string name="settings_section_about">ACERCA DE</string>
+    <string name="about_subtitle">Lector de noticias local-first con IA</string>
+    <string name="about_description">Lector de noticias híbrido Local-First diseñado para soberanía de datos, lectura sin conexión, verificación abierta (ClaimReview / Full Fact) e IA desacoplada vía AiHub o Sign in with ChatGPT.</string>
+    <string name="about_version">Versión</string>
+    <string name="about_platform">Plataforma</string>
+    <string name="about_platform_android">Android</string>
+    <string name="about_license">Licencia</string>
     <string name="settings_license_value">EUPL v1.2 / Licencia Comercial</string>
+    <string name="about_section_references">REFERENCIAS</string>
+    <string name="about_section_third_party">COMPONENTES DE TERCEROS</string>
+
+    <plurals name="articles_count">
+        <item quantity="one">%d artículo</item>
+        <item quantity="other">%d artículos</item>
+    </plurals>
+    <plurals name="reports_count">
+        <item quantity="one">%d informe</item>
+        <item quantity="other">%d informes</item>
+    </plurals>
+    <string name="reports_none">Ninguno</string>
 </resources>

@@ -1,38 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="date_locale">en</string>
+    <string name="fecha_cabecera">EEEE, MMMM d</string>
+
+    <!-- Main navigation -->
+    <string name="nav_briefing">Briefing</string>
     <string name="nav_feed">Articles</string>
-    <string name="nav_briefing">Daily briefing</string>
     <string name="nav_clusters">Stories</string>
+    <string name="nav_saved">Saved</string>
     <string name="nav_settings">Settings</string>
-    <string name="briefing_title">Daily briefing (Anti-Doomscrolling)</string>
+    <string name="nav_profile">Profile</string>
+    <string name="action_back">Back</string>
+
+    <!-- Daily briefing -->
+    <string name="briefing_title">Daily briefing</string>
     <string name="briefing_subtitle">5 to 7 essential reads selected on your device.</string>
+    <string name="briefing_empty">No articles yet. Sync your sources or add a feed.</string>
+    <string name="action_sync_now">Sync</string>
+    <string name="sync_in_progress">Syncing feeds…</string>
+    <string name="sync_done">Sync complete</string>
+
+    <!-- Feed and search -->
+    <string name="feed_search_hint">Search offline articles…</string>
+    <string name="feed_all_categories">All</string>
+    <string name="feed_add_title">Add RSS / Atom / JSON feed</string>
+    <string name="feed_name_label">Source name</string>
+    <string name="feed_url_label">Feed URL</string>
+    <string name="feed_category_label">Folder / Category</string>
+    <string name="feed_manage_title">Feeds &amp; OPML</string>
+    <string name="feed_import_opml">Import OPML</string>
+    <string name="feed_export_opml">Export OPML</string>
+    <string name="feed_delete">Delete</string>
+    <string name="action_add">Add</string>
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_close">Close</string>
+
+    <!-- Stories and timeline -->
+    <string name="clusters_subtitle">Local visual grouping without cross-source synthesis.</string>
+    <string name="timeline_title">Event timeline</string>
+
+    <!-- Article reader and quick actions -->
     <string name="headline_original">Original headline</string>
     <string name="headline_rewritten">Factual headline (AI)</string>
     <string name="headline_toggle">Compare factual headline</string>
+    <string name="headline_generate">Rewrite headline</string>
     <string name="summary_title">Executive summary</string>
-    <string name="summary_lead_fallback">Deterministic lead (AI unavailable)</string>
+    <string name="summary_generate">Summarize</string>
+    <string name="summary_lead_fallback">Deterministic lead</string>
     <string name="quick_action_explain">Explain concepts</string>
     <string name="quick_action_facts">Extract key figures</string>
     <string name="quick_action_translate">Translate</string>
+    <string name="action_stop_ai">Stop</string>
+    <string name="ai_operation_cancelled">Operation cancelled</string>
+    <string name="ai_generating">Running AI…</string>
     <string name="coverage_matrix_title">Coverage and plurality matrix (Cloud)</string>
-    <string name="timeline_title">Event timeline</string>
+    <string name="coverage_matrix_analyze">Analyze coverage</string>
+    <string name="article_bookmark">Save</string>
+    <string name="article_bookmarked">Saved</string>
+    <string name="article_open_original">Open original</string>
+    <string name="article_verify">Verify</string>
+
+    <!-- News fact-checking (ClaimReview / Full Fact / Google Fact Check) -->
+    <string name="factcheck_section_title">Related fact-checks</string>
+    <string name="factcheck_empty">No matching fact-checks found in the active catalog.</string>
+    <string name="factcheck_checking">Checking claims…</string>
+    <string name="factcheck_open_source">View fact-check</string>
+    <string name="settings_section_factcheck">NEWS VERIFICATION</string>
+    <string name="settings_fc_offline">Offline ClaimReview catalog</string>
+    <string name="settings_fc_offline_sub">Data Commons / Schema.org on device</string>
+    <string name="settings_fc_fullfact">Full Fact API</string>
+    <string name="settings_fc_fullfact_sub">NLP claim detection and matching</string>
+    <string name="settings_fc_google">Google Fact Check Tools API</string>
+    <string name="settings_fc_google_sub">Remote ClaimReview verdict lookup</string>
+    <string name="settings_fc_config_dialog">Configure verification APIs</string>
+    <string name="settings_fc_fullfact_endpoint">Full Fact endpoint</string>
+    <string name="settings_fc_fullfact_token">Full Fact token (optional)</string>
+    <string name="settings_fc_google_key">Google Fact Check key (optional)</string>
+    <string name="settings_fc_dump_url">ClaimReview JSON-LD dump URL</string>
+
+    <!-- AI and ChatGPT OAuth -->
     <string name="ai_unavailable">AI is not available right now</string>
     <string name="ai_open_settings">AI settings</string>
     <string name="ai_origin_on_device">On device</string>
     <string name="ai_origin_cloud">Cloud</string>
+    <string name="ai_origin_chatgpt">ChatGPT (OAuth)</string>
+    <string name="settings_section_account">ACCOUNT &amp; CONNECTIONS</string>
+    <string name="settings_chatgpt_title">Continue with ChatGPT</string>
+    <string name="settings_chatgpt_connected">Connected</string>
+    <string name="settings_chatgpt_disconnected">Not connected</string>
+    <string name="settings_chatgpt_sub">Open-source OAuth with your ChatGPT plan</string>
+    <string name="settings_chatgpt_sign_out">Disconnect</string>
     <string name="settings_section_ai">ARTIFICIAL INTELLIGENCE</string>
     <string name="settings_ai_source">AI source</string>
     <string name="settings_ai_source_nucleo">AiHub</string>
+    <string name="settings_ai_source_chatgpt">ChatGPT OAuth</string>
     <string name="settings_ai_source_on_device">On this phone</string>
     <string name="settings_ai_source_disabled">Disabled</string>
     <string name="settings_ai_cloud_row">Cloud</string>
     <string name="settings_ai_cloud_allowed">Allowed in AiHub</string>
     <string name="settings_ai_cloud_disallowed">Not allowed</string>
     <string name="settings_ai_cloud_configure">Configured in AiHub</string>
+
+    <!-- Appearance, Privacy, Data, and Profile -->
     <string name="settings_section_appearance">APPEARANCE</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
     <string name="settings_language">Language</string>
     <string name="settings_language_system">System</string>
+    <string name="settings_section_privacy">PRIVACY</string>
+    <string name="settings_error_reports">Save error reports</string>
+    <string name="settings_error_reports_sub">Technical crashes only, no personal data</string>
+    <string name="settings_section_data">DATA</string>
+    <string name="settings_saved_reports">Saved reports</string>
+    <string name="settings_clear_action">Clear</string>
+    <string name="settings_cache_title">Offline cache</string>
+    <string name="settings_cache_sub">Images and quick actions</string>
+    <string name="profile_default_title">Your profile</string>
+    <string name="profile_name_row">Name</string>
+    <string name="profile_name_optional">Optional</string>
+    <string name="profile_name_prompt">What should we call you</string>
+    <string name="profile_photo_dialog_title">Profile photo</string>
+    <string name="profile_photo_dialog_body">Stored encrypted on this device only.</string>
+    <string name="profile_photo_change">Change</string>
+    <string name="profile_photo_remove">Remove</string>
+    <string name="profile_photo_error">Could not use that photo</string>
+
+    <!-- About -->
     <string name="settings_section_about">ABOUT</string>
+    <string name="about_subtitle">Local-first AI news reader</string>
+    <string name="about_description">Hybrid Local-First news reader built for data sovereignty, offline reading, open fact-checking (ClaimReview / Full Fact), and decoupled AI via AiHub or Sign in with ChatGPT.</string>
+    <string name="about_version">Version</string>
+    <string name="about_platform">Platform</string>
+    <string name="about_platform_android">Android</string>
+    <string name="about_license">License</string>
     <string name="settings_license_value">EUPL v1.2 / Commercial License</string>
+    <string name="about_section_references">REFERENCES</string>
+    <string name="about_section_third_party">THIRD-PARTY COMPONENTS</string>
+
+    <plurals name="articles_count">
+        <item quantity="one">%d article</item>
+        <item quantity="other">%d articles</item>
+    </plurals>
+    <plurals name="reports_count">
+        <item quantity="one">%d report</item>
+        <item quantity="other">%d reports</item>
+    </plurals>
+    <string name="reports_none">None</string>
 </resources>

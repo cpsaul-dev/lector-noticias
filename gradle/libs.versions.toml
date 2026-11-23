@@ -12,6 +12,7 @@ androidxHilt = "1.4.0"
 coreKtx = "1.19.1"
 # Idiomas por app en todas las versiones de Android (estándar §3.9).
 appcompat = "1.7.1"
+browser = "1.8.0"
 activityCompose = "1.13.0"
 lifecycle = "2.11.0"
 composeBom = "2026.09.00"
@@ -29,11 +30,6 @@ conectoria = "1.5.0"
 
 okhttp = "5.5.1"
 jsoup = "1.24.1"
-# Editor enriquecido del redactor (R2), Apache 2.0; versión exacta, sin rangos.
-richeditor = "1.2.1"
-angusMail = "2.0.5"
-jakartaMail = "2.1.5"
-greenmail = "2.1.15"
 playServicesAuth = "22.0.0"
 appauth = "0.11.1"
 work = "2.12.0"
@@ -54,6 +50,7 @@ play-services-auth = { group = "com.google.android.gms", name = "play-services-a
 appauth = { group = "net.openid", name = "appauth", version.ref = "appauth" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycle" }
@@ -69,7 +66,6 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-ui-test-junit4-accessibility = { group = "androidx.compose.ui", name = "ui-test-junit4-accessibility" }
 mlkit-genai-prompt = { group = "com.google.mlkit", name = "genai-prompt", version.ref = "mlkitGenaiPrompt" }
-richeditor-compose = { group = "com.mohamedrejeb.richeditor", name = "richeditor-compose", version.ref = "richeditor" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 androidx-compose-material3-navigation-suite = { group = "androidx.compose.material3", name = "material3-adaptive-navigation-suite", version.ref = "material3" }
 androidx-compose-material3-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive", version.ref = "material3Adaptive" }
@@ -94,9 +90,6 @@ conectoria-client = { module = "dev.cpsaul.conectoria:client", version.ref = "co
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
-angus-mail = { group = "org.eclipse.angus", name = "angus-mail", version.ref = "angusMail" }
-jakarta-mail-api = { group = "jakarta.mail", name = "jakarta.mail-api", version.ref = "jakartaMail" }
-greenmail = { group = "com.icegreen", name = "greenmail-junit4", version.ref = "greenmail" }
 androidx-work-testing = { group = "androidx.work", name = "work-testing", version.ref = "work" }
 androidx-work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work" }
 androidx-hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltWork" }
@@ -120,13 +113,6 @@ roborazzi-compose = { group = "io.github.takahirom.roborazzi", name = "roborazzi
 roborazzi-accessibility-check = { group = "io.github.takahirom.roborazzi", name = "roborazzi-accessibility-check", version.ref = "roborazzi" }
 roborazzi-junit-rule = { group = "io.github.takahirom.roborazzi", name = "roborazzi-junit-rule", version.ref = "roborazzi" }
 
-# Solo para build-logic (plugins de convención).
-android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
-kover-gradlePlugin = { group = "org.jetbrains.kotlinx", name = "kover-gradle-plugin", version.ref = "kover" }
-compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
-detekt-gradlePlugin = { group = "dev.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
-detekt-composeRules = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "composeRules" }
-
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
@@ -137,12 +123,3 @@ room = { id = "androidx.room", version.ref = "room" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version.ref = "dependencyAnalysis" }
-
-# Plugins de convención (build-logic).
-gizmail-android-library = { id = "gizmail.android.library", version = "unspecified" }
-gizmail-calidad = { id = "gizmail.calidad", version = "unspecified" }
-gizmail-compose-estable = { id = "gizmail.compose.estable", version = "unspecified" }
-gizmail-android-lint = { id = "gizmail.android.lint", version = "unspecified" }
-gizmail-dependency-analysis = { id = "gizmail.dependency.analysis", version = "unspecified" }
-gizmail-detekt = { id = "gizmail.detekt", version = "unspecified" }
-gizmail-kover = { id = "gizmail.kover", version = "unspecified" }
