@@ -119,8 +119,16 @@ private fun PulsoAppShell(viewModel: NewsViewModel) {
     }
 
     fun openUrl(url: String) {
+        val uri = runCatching { Uri.parse(url) }.getOrNull() ?: return
         runCatching {
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            androidx.browser.customtabs.CustomTabsIntent.Builder()
+                .setShowTitle(true)
+                .build()
+                .launchUrl(context, uri)
+        }.onFailure {
+            runCatching {
+                context.startActivity(Intent(Intent.ACTION_VIEW, uri))
+            }
         }
     }
 

@@ -168,4 +168,16 @@ class FactCheckEnginesAndApisTest {
             server.close()
         }
     }
+
+    @Test
+    fun roomSchemasV1AndV2ExistWithClaimReviewsTable() {
+        val v1 = java.io.File("schemas/dev.cpsaul.noticias.data.local.NewsDatabase/1.json")
+        val v2 = java.io.File("schemas/dev.cpsaul.noticias.data.local.NewsDatabase/2.json")
+        assertTrue("Room schema 1.json must exist", v1.exists())
+        assertTrue("Room schema 2.json must exist", v2.exists())
+        val v2Text = v2.readText()
+        assertTrue(v2Text.contains("claim_reviews"))
+        assertTrue(v2Text.contains("idx_claim_reviews_provider"))
+        assertTrue(v2Text.contains("idx_claim_reviews_synced_at"))
+    }
 }

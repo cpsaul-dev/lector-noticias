@@ -57,8 +57,10 @@ interface ChatGptSessionStore {
 }
 
 object ChatGptOAuthConfig {
+    const val EXPECTED_ISSUER = "https://auth.openai.com"
     const val AUTHORIZE_ENDPOINT = "https://auth.openai.com/api/accounts/authorize"
     const val TOKEN_ENDPOINT = "https://auth.openai.com/api/accounts/oauth/token"
+    const val JWKS_ENDPOINT = "https://auth.openai.com/.well-known/jwks.json"
     const val RESOURCE_API_V1 = "https://api.openai.com/v1"
     const val DYNAMIC_CLIENT_ID = "dynamic_agent_client"
     const val AGENT_NAME_HINT = "Pulso"
@@ -218,7 +220,8 @@ class ChatGptOAuthManager(
     private val store: ChatGptSessionStore,
     private val httpClient: OkHttpClient = defaultOAuthHttpClient(),
     private val authorizeEndpoint: String = ChatGptOAuthConfig.AUTHORIZE_ENDPOINT,
-    private val tokenEndpoint: String = ChatGptOAuthConfig.TOKEN_ENDPOINT
+    private val tokenEndpoint: String = ChatGptOAuthConfig.TOKEN_ENDPOINT,
+    private val idTokenVerifier: JwksIdTokenVerifier? = JwksIdTokenVerifier(httpClient)
 ) {
     private val _session = MutableStateFlow(store.loadSession())
     val session: StateFlow<ChatGptOAuthSession?> = _session.asStateFlow()
@@ -305,7 +308,11 @@ class ChatGptOAuthManager(
             val code = queryParams["code"]
                 ?: return@withContext ChatGptAuthResult.Error("No se recibió código de autorización")
 
-            val issuedClientId = queryParams["client_id"]?.takeIf { it.isNotBlank() }
+            val returnedClientId = queryParams["client_id"]?.takeIf { it.isNotBlank() }
+            if (existing != null && returnedClientId != null && returnedClientId != existing.issuedClientId) {
+                return@withContext ChatGptAuthResult.Error("El client_id recibido no coincide con el registro de la cuenta")
+            }
+            val issuedClientId = returnedClientId
                 ?: existing?.issuedClientId
                 ?: return@withContext ChatGptAuthResult.Error("Registro incompleto: falta client_id emitido")
 
@@ -313,7 +320,9 @@ class ChatGptOAuthManager(
                 code = code,
                 issuedClientId = issuedClientId,
                 codeVerifier = verifier,
-                redirectUri = redirectUri
+                redirectUri = redirectUri,
+                expectedNonce = nonce,
+                expectedSubject = existing?.subject
             )
         }
     }
@@ -322,7 +331,9 @@ class ChatGptOAuthManager(
         code: String,
         issuedClientId: String,
         codeVerifier: String,
-        redirectUri: String
+        redirectUri: String,
+        expectedNonce: String? = null,
+        expectedSubject: String? = null
     ): ChatGptAuthResult = withContext(Dispatchers.IO) {
         val form = FormBody.Builder()
             .add("grant_type", "authorization_code")
@@ -359,10 +370,31 @@ class ChatGptOAuthManager(
                     .filter { it.isNotBlank() }
                     .toSet()
 
-                val claims = idToken?.let { decodeJwtClaimsUnverified(it) }
+                val validated = if (idToken != null && idTokenVerifier != null) {
+                    when (val check = idTokenVerifier.verify(idToken, issuedClientId, expectedNonce)) {
+                        is IdTokenValidationResult.Valid -> check.token
+                        is IdTokenValidationResult.Invalid -> {
+                            return@withContext ChatGptAuthResult.Error("ID token rechazado: ${check.reason}")
+                        }
+                    }
+                } else {
+                    val claims = idToken?.let { decodeJwtClaimsUnverified(it) }
+                    claims?.let {
+                        ValidatedIdToken(
+                            subject = it.optString("sub"),
+                            email = it.optString("email").takeIf { e -> e.isNotBlank() },
+                            issuer = it.optString("iss")
+                        )
+                    }
+                }
+
+                if (!expectedSubject.isNullOrBlank() && validated != null && validated.subject != expectedSubject) {
+                    return@withContext ChatGptAuthResult.Error("La identidad verificada no coincide con la cuenta seleccionada")
+                }
+
                 val session = ChatGptOAuthSession(
-                    email = claims?.optString("email")?.takeIf { it.isNotBlank() },
-                    subject = claims?.optString("sub")?.takeIf { it.isNotBlank() },
+                    email = validated?.email,
+                    subject = validated?.subject?.takeIf { it.isNotBlank() },
                     issuedClientId = issuedClientId,
                     extAgentHostId = store.getOrCreateHostId(),
                     idToken = idToken,

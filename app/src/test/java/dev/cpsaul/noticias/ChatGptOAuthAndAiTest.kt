@@ -60,13 +60,30 @@ class ChatGptOAuthAndAiTest {
     }
 
     @Test
-    fun exchangesAuthorizationCodeAndStoresIssuedClientId() = runBlocking {
-        val server = MockWebServer()
-        val fakePayload = Base64.getUrlEncoder().withoutPadding()
-            .encodeToString("""{"sub":"user-42","email":"reader@example.org"}""".toByteArray())
-        val fakeJwt = "eyJhbGciOiJSUzI1NiJ9.$fakePayload.sig"
+    fun exchangesAuthorizationCodeAndValidatesRs256IdTokenViaJwks() = runBlocking {
+        val keyPair = java.security.KeyPairGenerator.getInstance("RSA").apply { initialize(2048) }.generateKeyPair()
+        val pub = keyPair.public as java.security.interfaces.RSAPublicKey
+        val nB64 = Base64.getUrlEncoder().withoutPadding().encodeToString(unsignedBytes(pub.modulus))
+        val eB64 = Base64.getUrlEncoder().withoutPadding().encodeToString(unsignedBytes(pub.publicExponent))
 
-        server.enqueue(
+        val exp = (System.currentTimeMillis() / 1000L) + 3600L
+        val validJwt = signRs256Jwt(
+            privateKey = keyPair.private,
+            kid = "key-1",
+            payloadJson = """{"iss":"https://auth.openai.com","aud":"oaiapp_issued_99","sub":"user-42","email":"reader@example.org","nonce":"nonce-ok","exp":$exp}"""
+        )
+
+        val jwksServer = MockWebServer()
+        jwksServer.enqueue(
+            MockResponse.Builder()
+                .code(200)
+                .body("""{"keys":[{"kty":"RSA","kid":"key-1","alg":"RS256","n":"$nB64","e":"$eB64"}]}""")
+                .build()
+        )
+        jwksServer.start()
+
+        val tokenServer = MockWebServer()
+        tokenServer.enqueue(
             MockResponse.Builder()
                 .code(200)
                 .body(
@@ -74,7 +91,7 @@ class ChatGptOAuthAndAiTest {
                     {
                       "access_token": "acc-123",
                       "refresh_token": "ref-456",
-                      "id_token": "$fakeJwt",
+                      "id_token": "$validJwt",
                       "expires_in": 3600,
                       "scope": "openid profile email offline_access resource.invoke chatgpt.tokens.use.direct"
                     }
@@ -82,28 +99,62 @@ class ChatGptOAuthAndAiTest {
                 )
                 .build()
         )
-        server.start()
+        tokenServer.start()
         try {
+            val http = ChatGptOAuthManager.defaultOAuthHttpClient()
+            val verifier = dev.cpsaul.noticias.ai.JwksIdTokenVerifier(
+                httpClient = http,
+                jwksEndpoint = jwksServer.url("/.well-known/jwks.json").toString()
+            )
             val store = InMemoryChatGptSessionStore()
             val manager = ChatGptOAuthManager(
                 store = store,
-                tokenEndpoint = server.url("/api/accounts/oauth/token").toString()
+                httpClient = http,
+                tokenEndpoint = tokenServer.url("/api/accounts/oauth/token").toString(),
+                idTokenVerifier = verifier
             )
             val res = manager.exchangeAuthorizationCode(
                 code = "auth-code-1",
                 issuedClientId = "oaiapp_issued_99",
                 codeVerifier = "verifier-abc",
-                redirectUri = "http://127.0.0.1:43210/auth/callback"
+                redirectUri = "http://127.0.0.1:43210/auth/callback",
+                expectedNonce = "nonce-ok"
             )
-            assertTrue(res is ChatGptAuthResult.Success)
+            assertTrue("Expected Success, got $res", res is ChatGptAuthResult.Success)
             val session = (res as ChatGptAuthResult.Success).session
             assertEquals("oaiapp_issued_99", session.issuedClientId)
             assertEquals("reader@example.org", session.email)
+            assertEquals("user-42", session.subject)
             assertTrue(session.hasPlanUsagePermission)
             assertNotNull(store.loadSession())
+
+            // Verificar que el verificador rechaza nonce incorrecto y firma adulterada
+            val wrongNonce = verifier.verify(validJwt, "oaiapp_issued_99", "nonce-malo")
+            assertTrue(wrongNonce is dev.cpsaul.noticias.ai.IdTokenValidationResult.Invalid)
+            val tampered = validJwt.substringBeforeLast(".") + ".AAAA"
+            val badSig = verifier.verify(tampered, "oaiapp_issued_99", "nonce-ok")
+            assertTrue(badSig is dev.cpsaul.noticias.ai.IdTokenValidationResult.Invalid)
         } finally {
-            server.close()
+            tokenServer.close()
+            jwksServer.close()
         }
+    }
+
+    private fun signRs256Jwt(privateKey: java.security.PrivateKey, kid: String, payloadJson: String): String {
+        val enc = Base64.getUrlEncoder().withoutPadding()
+        val header = enc.encodeToString("""{"alg":"RS256","typ":"JWT","kid":"$kid"}""".toByteArray())
+        val payload = enc.encodeToString(payloadJson.toByteArray())
+        val signingInput = "$header.$payload"
+        val sig = java.security.Signature.getInstance("SHA256withRSA").apply {
+            initSign(privateKey)
+            update(signingInput.toByteArray(Charsets.US_ASCII))
+        }.sign()
+        return "$signingInput.${enc.encodeToString(sig)}"
+    }
+
+    private fun unsignedBytes(value: java.math.BigInteger): ByteArray {
+        val raw = value.toByteArray()
+        return if (raw.size > 1 && raw[0] == 0.toByte()) raw.copyOfRange(1, raw.size) else raw
     }
 
     @Test
