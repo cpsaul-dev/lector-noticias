@@ -26,7 +26,7 @@ sqlite = "2.7.1"
 sqlcipher = "4.20.0"
 coroutines = "1.11.0"
 turbine = "1.2.1"
-conectoria = "1.5.0"
+conectoria = "1.9.0"
 
 okhttp = "5.5.1"
 jsoup = "1.24.1"
